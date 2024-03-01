@@ -1,0 +1,17 @@
+.field__item{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    color: #505050;
+    font-size: 35px;
+    margin: 5px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 8px;
+    border-radius: 15px;
+    &:hover{
+        background-color: rgba(56, 202, 16, 0.212);
+        box-shadow: rgba(56, 202, 16, 0.4) 0px 3px 8px;
+        cursor: pointer;
+        transition: .3s all;
+    }
+}

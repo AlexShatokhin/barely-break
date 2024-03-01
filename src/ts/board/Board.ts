@@ -1,32 +1,36 @@
-import Field from "../field/Field";
+import FieldSetHTML from "../fieldSet/FieldSetHTML";
 import "./board.scss"
 
-class Board {
-    fields: Field[] = [];
+class Board extends FieldSetHTML{
+    
+    board: HTMLElement = document.createElement("section");
 
-    fillFields():void{
-        for(let i = 0; i < 15; i++){
-            this.fields.push(new Field(i+1));
-        }
-        this.fields.push(new Field())
+    private renderBoard(){
+        this.board.classList.add("board");
+        document.documentElement.append(this.board)
     }
 
-    renderFields():HTMLDivElement[]{
-        return this.fields.map((field) => field.render())
+    private clearFields(){
+        this.fields = [];
+        this.board.textContent = "";
     }
 
-    render():HTMLDivElement{
-        const board = document.createElement("div");
-        board.classList.add("board");
-
-
-        this.renderFields().forEach(field => {
-            board.append(field)
-        })
-
-        return board;
-
+    public render(){
+        this.clearFields();
+        this.renderBoard();
+        this.renderFields().map(field => this.board.append(field))
     }
+
+
+
+    solvePuzzle():number{
+        const moves = this.solve();
+        this.board.textContent = "";
+        this.renderFields().map(field => this.board.append(field))
+
+        return moves;
+    }
+
 }
 
 export default Board;

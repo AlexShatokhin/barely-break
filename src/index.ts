@@ -1,13 +1,20 @@
-import Field from "./ts/field/Field";
 import Board from "./ts/board/Board";
+import "./index.scss"
 
-document.addEventListener("DOMContentLoaded", ():void => {
+document.addEventListener("DOMContentLoaded", () => {
 
-    const content = document.querySelector(".content");
-    const field = new Field();
-    const board = new Board();
-    board.fillFields();
+    const shuffleBtn = document.querySelector(".shuffle");
+    const solveBtn = document.querySelector(".solve");
 
-    content?.append(board.render())
+    const set = new Board();
+
+    set.render();
+    shuffleBtn?.addEventListener("click", () => {
+        set.render();
+    })
+
+    solveBtn?.addEventListener("click", () => {
+        set.solvePuzzle();
+    })
 
 })
