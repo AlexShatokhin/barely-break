@@ -9,9 +9,17 @@
     box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 8px;
     border-radius: 15px;
     &:hover{
-        background-color: rgba(56, 202, 16, 0.212);
-        box-shadow: rgba(56, 202, 16, 0.4) 0px 3px 8px;
+        background-color: rgba(0, 0, 0, 0.09);
+        box-shadow: rgba(0, 0, 0, 0.4) 0px 3px 8px;
         cursor: pointer;
         transition: .3s all;
+    }
+    &-empty{
+        box-shadow: none;
+        &:hover{
+            background-color: rgba(56, 202, 16, 0);
+            box-shadow: none;
+            cursor: default;
+        }
     }
 }

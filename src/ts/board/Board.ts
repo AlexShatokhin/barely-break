@@ -5,6 +5,21 @@ class Board extends FieldSetHTML{
     
     board: HTMLElement = document.createElement("section");
 
+    private convertFieldToHTMLElement = (field: number):void => {
+        const element = document.createElement("div");
+        element.classList.add("field__item");
+        if(field === 0)
+            element.classList.add("field__item-empty");
+
+        element.textContent = field === 0 ? "" : field.toString();
+        element.addEventListener("click", () => {
+            this.moveTile(field)
+            this.rerender()
+        } );
+
+        this.board.append(element);
+    }
+
     private renderBoard(){
         this.board.classList.add("board");
         document.documentElement.append(this.board)
@@ -18,18 +33,16 @@ class Board extends FieldSetHTML{
     public render(){
         this.clearFields();
         this.renderBoard();
-        this.renderFields().map(field => this.board.append(field))
+        this.renderFields();
+
+        this.fields.map(field => this.convertFieldToHTMLElement(field))
     }
 
-
-
-    solvePuzzle():number{
-        const moves = this.solve();
+    private rerender(){
         this.board.textContent = "";
-        this.renderFields().map(field => this.board.append(field))
-
-        return moves;
+        this.fields.map(field => this.convertFieldToHTMLElement(field))
     }
+
 
 }
 

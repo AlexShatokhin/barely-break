@@ -14,7 +14,6 @@ document.addEventListener("DOMContentLoaded", () => {
     })
 
     solveBtn?.addEventListener("click", () => {
-        set.solvePuzzle();
     })
 
 })
