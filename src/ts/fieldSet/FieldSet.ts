@@ -3,20 +3,42 @@ class FieldSet {
 	protected fields:number[] = [];
 
 	protected fillFields(): void{
-		for(let i = 0; i < 16; i++){
+		for(let i = 1; i < 16; i++){
 				this.fields.push(i);
 		}
+		this.fields.push(0);
+	}
+
+	private getZeroNeighbours(): number[]{
+		const emptyIndex: number = this.fields.indexOf(0);
+		const neighbours: number[] = [];
+
+		if(Math.floor((emptyIndex - 1) / 4) === Math.floor(emptyIndex / 4)){
+			neighbours.push(emptyIndex - 1);
+		}
+
+		if(Math.floor((emptyIndex + 1) / 4) === Math.floor(emptyIndex / 4)){
+			neighbours.push(emptyIndex + 1);
+		}
+
+
+		if(emptyIndex + 4 <= 15){
+			neighbours.push(emptyIndex + 4);
+		}
+
+		if(emptyIndex - 4 >= 0){
+			neighbours.push(emptyIndex - 4);
+		}
+
+		return neighbours;
 	}
 
 	protected shuffleFields(): void {
-		let temp: number;
-
-		for (let i = this.fields.length - 1; i > 0; i--) {
-			const j = Math.floor(Math.random() * (i + 1));
-
-			temp = this.fields[i];
-			this.fields[i] = this.fields[j];
-			this.fields[j] = temp;
+		for(let shuffleMoves = 0; shuffleMoves < 30; shuffleMoves++ ){
+		
+			const neighbours: number[] = this.getZeroNeighbours();
+			const randomNeighbourIndex: number = Math.floor(Math.random() * neighbours.length);
+			this.moveTile(this.fields[neighbours[randomNeighbourIndex]]);
 		}
 	}
 
@@ -38,6 +60,7 @@ class FieldSet {
 			[this.fields[movingFieldIndex], this.fields[emptyIndex]] =
 			[this.fields[emptyIndex], this.fields[movingFieldIndex]];
 		}
+
 	}
 
 
@@ -51,7 +74,7 @@ class FieldSet {
 
 		const VerticalCheckingEmptyField = 			
 			(emptyIndex % 4 === movingFieldIndex % 4) &&
-			(emptyIndex - 4 === movingFieldIndex || emptyIndex + 4 === movingFieldIndex);;
+			(emptyIndex - 4 === movingFieldIndex || emptyIndex + 4 === movingFieldIndex);
 
 		return VerticalCheckingEmptyField || HorizontalCheckingEmptyField;
 	}
