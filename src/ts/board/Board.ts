@@ -1,9 +1,12 @@
-import FieldSetHTML from "../fieldSet/FieldSetHTML";
+import GameData from "../game/Game";
 import "./board.scss"
+import "../fieldSet/field.scss"
 
-class Board extends FieldSetHTML{
+class GameRenderer extends GameData{
     
-    board: HTMLElement = document.createElement("section");
+    boardHTML: HTMLElement = document.createElement("section");
+    counterHTML = document.querySelector(".menu-content__counter") as HTMLElement;
+
 
     private convertFieldToHTMLElement = (field: number):void => {
         const element = document.createElement("div");
@@ -17,33 +20,37 @@ class Board extends FieldSetHTML{
             this.rerender()
         } );
 
-        this.board.append(element);
+        this.boardHTML.append(element);
     }
 
     private renderBoard(){
-        this.board.classList.add("board");
-        document.documentElement.append(this.board)
+        this.boardHTML.classList.remove("board__won");
+        this.boardHTML.classList.add("board");
+        document.documentElement.append(this.boardHTML)
     }
 
-    private clearFields(){
-        this.fields = [];
-        this.board.textContent = "";
-    }
-
-    public render(){
-        this.clearFields();
+    public renderNewGame(){
+        this.newGame();
         this.renderBoard();
-        this.renderFields();
 
+        this.boardHTML.textContent = "";
+        this.counterHTML.textContent = `Moves: ${this.movesCount}`;
         this.fields.map(field => this.convertFieldToHTMLElement(field))
     }
 
     private rerender(){
-        this.board.textContent = "";
+        this.boardHTML.textContent = "";
         this.fields.map(field => this.convertFieldToHTMLElement(field))
+        
+        this.counterHTML.textContent = `Moves: ${this.movesCount}`;
+
+        if(this.isGameWon()){
+            this.boardHTML.textContent = "You won!";
+            this.boardHTML.classList.add("board__won");
+        }
     }
 
 
 }
 
-export default Board;
+export default GameRenderer;
