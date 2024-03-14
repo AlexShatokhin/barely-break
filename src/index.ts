@@ -1,19 +1,22 @@
 import Board from "./ts/board/Board";
+import GameData from "./ts/game/Game";
 import "./index.scss"
 
 document.addEventListener("DOMContentLoaded", () => {
 
     const shuffleBtn = document.querySelector(".shuffle");
-    const solveBtn = document.querySelector(".solve");
+    const startGameBtn = document.querySelector(".start");
 
     const set = new Board();
 
-    set.render();
+    set.renderNewGame();
     shuffleBtn?.addEventListener("click", () => {
-        set.render();
+        set.renderNewGame();
+
     })
 
-    solveBtn?.addEventListener("click", () => {
+    startGameBtn?.addEventListener("click", () => {
+        set.renderNewGame();
     })
 
 })
