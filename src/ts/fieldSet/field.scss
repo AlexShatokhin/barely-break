@@ -8,14 +8,17 @@
     margin: 5px;
     box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 8px;
     border-radius: 15px;
+    transition: .3s all;
+
     &:hover{
         background-color: rgba(0, 0, 0, 0.09);
+        color: #505050;
         box-shadow: rgba(0, 0, 0, 0.4) 0px 3px 8px;
         cursor: pointer;
-        transition: .3s all;
     }
     &-empty{
         box-shadow: none;
+        background-color: rgba(0, 0, 0, 0.00);
         &:hover{
             background-color: rgba(56, 202, 16, 0);
             box-shadow: none;
