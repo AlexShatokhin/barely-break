@@ -4,3 +4,25 @@
     padding: 0;
     font-family: sans-serif;
 }
+
+.theme-white{
+    background-color: #FFFFFF;
+}
+
+.theme-blue{
+    background-color: #2196F3;
+    color: #FFFFFF;
+}
+
+.theme-yellow{
+    background-color: #FFC107;
+}
+
+.theme-lilac{
+    background-color: #822194;
+    color: #FFFFFF;
+}
+
+
+
+@import url(./scss/themes.scss);
