@@ -19,15 +19,18 @@
         border: none;
         width: 40px;
         height: 40px;
-        border: 1px solid rgba(0, 0, 0, .3);
-        transition: .2s opacity;
+        box-shadow: rgba(0, 0, 0, 0.3) 0px 3px 8px;
+        transition: .3s all;
         &:hover{
-            opacity: 0.8;
+            box-shadow: rgba(0, 0, 0, 0.7) 0px 3px 8px;
             cursor: pointer;
         }
     }
     .theme-active{
-        border: 3px solid rgba(0, 0, 0, .5);
+        box-shadow: rgba(0, 0, 0, 0.9) 0px 3px 8px;
+        &:hover{
+            box-shadow: rgba(0, 0, 0, 0.9) 0px 3px 8px;
+        }
     }
 }
 
