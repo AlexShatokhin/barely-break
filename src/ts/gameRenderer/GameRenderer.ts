@@ -1,4 +1,5 @@
 import GameData from "../game/Game";
+import { buttons } from "./buttons";
 import "./board.scss"
 import "../fieldSet/field.scss"
 
@@ -6,12 +7,15 @@ class GameRenderer extends GameData{
     
     boardHTML: HTMLElement = document.createElement("section");
     counterHTML = document.querySelector(".menu-content__counter") as HTMLElement;
+    theme: string = "theme-white";
 
     private getCurrentTheme = (): string => {
         const activeThemeButton = document.querySelector(".theme-active") as HTMLElement;
         const theme = activeThemeButton.getAttribute("data-theme");
 
-        return theme ? theme : "#FFFFFF"
+        this.theme = theme ? theme : "theme-white";
+        
+        return this.theme;
     }
 
     private convertFieldToHTMLElement = (field: number):void => {
@@ -47,7 +51,7 @@ class GameRenderer extends GameData{
         this.renderBoard();
 
         this.boardHTML.textContent = "";
-        this.counterHTML.textContent = `Moves: ${this.movesCount}`;
+        this.counterHTML.textContent = this.movesCount.toString();
         this.fields.map(field => this.convertFieldToHTMLElement(field))
     }
 
@@ -58,11 +62,17 @@ class GameRenderer extends GameData{
         });
         
 
-        this.counterHTML.textContent = `Moves: ${this.movesCount}`;
+        this.counterHTML.textContent = this.movesCount.toString();
 
         if(this.isGameWon()){
-            this.boardHTML.textContent = "You won!";
+            this.boardHTML.innerHTML += `
+            <div class = "board__content"> 
+                <h1 class="board__title">Поздравляем!</h1>
+                <p class="board__text">Вы собрали пазл за ${this.movesCount} ходов</p>
+            </div>
+            `;
             this.boardHTML.classList.add("board__won");
+
         }
     }
 
@@ -85,12 +95,12 @@ class GameRenderer extends GameData{
 
     private renderThemeButtons() : void{
         const themeContent = document.querySelector(".themes-switcher__buttons") as HTMLElement;
-        themeContent.innerHTML = `
-            <button data-theme = "theme-white" class="themes-switcher__button theme-white theme-active"></button>
-            <button data-theme = "theme-blue" class="themes-switcher__button theme-blue"></button>
-            <button data-theme = "theme-yellow" class="themes-switcher__button theme-yellow"></button>
-            <button data-theme = "theme-lilac" class="themes-switcher__button theme-lilac"></button>
-        `
+
+        const html = buttons.map(button => {
+            return `<button data-theme = "${button.data}" class="themes-switcher__button ${this.theme === button.data ? "theme-active" : ""}  ${button.data}"></button>`
+        })
+        themeContent.innerHTML = html.join("");
+
         this.switchTheme();
     }
 
