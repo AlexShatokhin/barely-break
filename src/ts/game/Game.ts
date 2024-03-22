@@ -6,8 +6,8 @@ class GameData extends FieldSet {
     public newGame(){
         this.clearFields();
         this.fillFields();
-        this.shuffleFields();
         this.movesCount = 0;
+        this.isGameBegan = false;
     }
 }
 

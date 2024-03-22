@@ -47,6 +47,11 @@ class GameRenderer extends GameData{
 
     public renderNewGame(){
         this.newGame();
+        this.shuffleFieldsWithIntervals(0)
+        .then(() => {
+            this.isGameBegan = true;
+            this.removeDisablingLayer();
+        });
         this.renderThemeButtons();
         this.renderBoard();
 
@@ -56,19 +61,23 @@ class GameRenderer extends GameData{
     }
 
     protected rerender(){
-        this.boardHTML.textContent = "";
+        if(this.isGameBegan)
+            this.boardHTML.textContent = ""
+        else
+            this.boardHTML.innerHTML = this.createDisablingLayer();
         this.fields.forEach(field => {
             this.convertFieldToHTMLElement(field)
         });
         
-
         this.counterHTML.textContent = this.movesCount.toString();
 
-        if(this.isGameWon()){
+
+
+        if(this.isGameWon() && this.isGameBegan){
             this.boardHTML.innerHTML += `
             <div class = "board__content"> 
                 <h1 class="board__title">Поздравляем!</h1>
-                <p class="board__text">Вы собрали пазл за ${this.movesCount} ходов</p>
+                <p class="board__text">Вы собрали пятнашки за ${this.movesCount} ходов</p>
             </div>
             `;
             this.boardHTML.classList.add("board__won");
@@ -93,6 +102,20 @@ class GameRenderer extends GameData{
 
     }
 
+    private createDisablingLayer() : string {
+        const shuffleBtn = document.querySelector(".shuffle") as HTMLButtonElement;
+        shuffleBtn.disabled = true;
+        return `<div class="disabling-layer"></div>`;
+    }
+
+    private removeDisablingLayer() : void {
+        const shuffleBtn = document.querySelector(".shuffle") as HTMLButtonElement;
+        const disablingLayer = document.querySelector(".disabling-layer");
+        
+        shuffleBtn.disabled = false;
+        disablingLayer?.remove();
+    }
+
     private renderThemeButtons() : void{
         const themeContent = document.querySelector(".themes-switcher__buttons") as HTMLElement;
 
@@ -104,6 +127,25 @@ class GameRenderer extends GameData{
         this.switchTheme();
     }
 
+
+	protected shuffleFieldsWithIntervals(index: number):Promise<number>{
+		if(index >= 60) 
+			return new Promise<number>((resolve) => resolve(0));
+		else 
+			return new Promise<number>((resolve) => {
+				setTimeout(()=>{
+					const neighbours: number[] = this.getZeroNeighbours();
+					const randomNeighbourIndex: number = Math.floor(Math.random() * neighbours.length);
+					this.moveTile(this.fields[neighbours[randomNeighbourIndex]]);
+                    this.movesCount = 0;
+					resolve(index + 1);
+				}, 50)
+			})
+			.then((index: number) => {
+                this.rerender();
+                return this.shuffleFieldsWithIntervals(index)
+            })
+	}
 
 }
 

@@ -14,7 +14,7 @@ class FieldSet {
 		this.fields = [];
 	}
 
-	private getZeroNeighbours(): number[]{
+	protected getZeroNeighbours(): number[]{
 		const emptyIndex: number = this.fields.indexOf(0);
 		const neighbours: number[] = [];
 
@@ -34,13 +34,14 @@ class FieldSet {
 	}
 
 	protected shuffleFields(): void {
-		for(let shuffleMoves = 0; shuffleMoves < 60; shuffleMoves++ ){
-		
+		for(let shuffleMoves = 0; shuffleMoves < 60; shuffleMoves++){	
 			const neighbours: number[] = this.getZeroNeighbours();
 			const randomNeighbourIndex: number = Math.floor(Math.random() * neighbours.length);
 			this.moveTile(this.fields[neighbours[randomNeighbourIndex]]);
 		}
 	}
+
+
 
 	protected isGameWon():boolean {
 
