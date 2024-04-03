@@ -15,15 +15,18 @@ class SwitchPageTheme {
 
     private switchTheme(){
         const newTheme : ThemeType = SwitchPageTheme.theme === "white" ? "black" : "white"
-        document.documentElement.style.backgroundColor = newTheme === "white" ? "#FFFFFF" : "#404040";        
+        const contentLayout = document.querySelector(".main") as HTMLElement;
+        contentLayout.style.backgroundColor = newTheme === "white" ? "#FFFFFF" : "#404040";        
 
         const themeButtonsTitle = document.querySelector(".themes-switcher__title");
         const menuContent = document.querySelector(".menu-content__information");
         const board = document.querySelector(".board");
+        const themeButtonsLayout = document.querySelector(".themes-switcher__buttons");
 
         this.toggleElementsTheme(themeButtonsTitle, SwitchPageTheme.theme, newTheme);
         this.toggleElementsTheme(menuContent, SwitchPageTheme.theme, newTheme);
         this.toggleElementsTheme(board, SwitchPageTheme.theme, newTheme);
+        this.toggleElementsTheme(themeButtonsLayout, SwitchPageTheme.theme, newTheme);
 
         SwitchPageTheme.theme = newTheme;
 

@@ -11,14 +11,15 @@
         display: flex;
         width: 400px;
         justify-content: space-around;
+        align-items: center;
         margin: 0 auto;
     }
 
     .themes-switcher__button{
         border-radius: 50px;
         border: none;
-        width: 40px;
-        height: 40px;
+        width: 50px;
+        height: 50px;
         box-shadow: rgba(0, 0, 0, 0.3) 0px 3px 8px;
         transition: .3s all;
         &:hover{
@@ -27,6 +28,8 @@
         }
     }
     .theme-active{
+        width: 65px;
+        height: 65px;
         box-shadow: rgba(0, 0, 0, 0.9) 0px 3px 8px;
         &:hover{
             box-shadow: rgba(0, 0, 0, 0.9) 0px 3px 8px;
@@ -35,6 +38,21 @@
 
     .theme_black{
         color: #FFFFFF;
+    }
+
+    .themes-switcher__buttons.theme_black{
+        .themes-switcher__button{
+            box-shadow: rgba(255, 255, 255, 0.3) 0px 3px 8px;
+            &:hover{
+                box-shadow: rgba(252, 252, 252, 0.7) 0px 3px 8px;
+            }
+        }
+        .theme-active{
+            box-shadow: rgba(255, 255, 255, 0.9) 0px 3px 8px;
+            &:hover{
+                box-shadow: rgba(255, 255, 255, 0.9) 0px 3px 8px;
+            }
+        }
     }
 }
 

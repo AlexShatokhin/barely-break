@@ -23,6 +23,14 @@
     color: #FFFFFF;
 }
 
+.main{
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100vw;
+    transition: .4s all;
+    overflow: hidden
+}
 
 
 @import url(./scss/themes.scss);
