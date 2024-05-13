@@ -1,6 +1,12 @@
 type ThemeType = "white" | "black";
 
-class SwitchPageTheme {
+interface ThemeSwitcher {
+    renderThemeButton() : void;
+    switchTheme() : void;
+    toggleElementsTheme(element: Element | null, oldTheme : ThemeType, newTheme : ThemeType) : void;
+}
+
+class SwitchPageTheme implements ThemeSwitcher{
     static theme : ThemeType = "white"
     public renderThemeButton(){
         const themeButton = document.createElement("button");
@@ -13,7 +19,7 @@ class SwitchPageTheme {
         document.querySelector(".menu-content__buttons")?.append(themeButton);
     }
 
-    private switchTheme(){
+    switchTheme(){
         const newTheme : ThemeType = SwitchPageTheme.theme === "white" ? "black" : "white"
         const contentLayout = document.querySelector(".main") as HTMLElement;
         contentLayout.style.backgroundColor = newTheme === "white" ? "#FFFFFF" : "#404040";        
@@ -32,7 +38,7 @@ class SwitchPageTheme {
 
     }
 
-    private toggleElementsTheme(element: Element | null, oldTheme : ThemeType, newTheme : ThemeType){
+    toggleElementsTheme(element: Element | null, oldTheme : ThemeType, newTheme : ThemeType){
         element?.classList.remove(`theme_${oldTheme}`);
         element?.classList.add(`theme_${newTheme}`);
     }

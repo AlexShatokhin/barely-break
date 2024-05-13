@@ -1,4 +1,17 @@
-class FieldSet {
+abstract class FieldSetAbstract {
+	protected fields: number[] = [];
+	protected movesCount: number = 0;
+
+	protected fillFields(): void {}
+	protected clearFields(): void {}
+	protected getZeroNeighbours(): number[] { return []; }
+	protected shuffleFields(): void {}
+	protected isGameWon(): boolean { return false; }
+	protected moveTile(movingField: number): void {}
+	public isValidMove(movingField: number): boolean { return false; }
+}
+
+class FieldSet extends FieldSetAbstract {
 
 	protected fields:number[] = [];
 	protected movesCount = 0;

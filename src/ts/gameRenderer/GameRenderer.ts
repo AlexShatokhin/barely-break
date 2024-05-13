@@ -2,7 +2,8 @@ import GameData from "../game/Game";
 import { buttons } from "./buttons";
 import "./board.scss"
 import "../fieldSet/field.scss"
-
+//Делегат для начала новой игры
+type newGameDelegate = () => void;
 class GameRenderer extends GameData{
     
     boardHTML: HTMLElement = document.createElement("section");
@@ -46,7 +47,9 @@ class GameRenderer extends GameData{
     }
 
     public renderNewGame(){
-        this.newGame();
+        let beginNewGame:newGameDelegate = this.newGame;
+        beginNewGame();
+
         this.shuffleFieldsWithIntervals(0)
         .then(() => {
             this.isGameBegan = true;
