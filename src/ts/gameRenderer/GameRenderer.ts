@@ -1,4 +1,5 @@
 import GameData from "../game/Game";
+import DisablingLayer from "./DisablingLayer";
 import { buttons } from "./buttons";
 import "./board.scss"
 import "../fieldSet/field.scss"
@@ -9,6 +10,7 @@ class GameRenderer extends GameData{
     boardHTML: HTMLElement = document.createElement("section");
     counterHTML = document.querySelector(".menu-content__counter") as HTMLElement;
     theme: string = "theme-white";
+    disablingLayer : DisablingLayer = new DisablingLayer();
 
     private getCurrentTheme = (): string => {
         const activeThemeButton = document.querySelector(".theme-active") as HTMLElement;
@@ -53,7 +55,7 @@ class GameRenderer extends GameData{
         this.shuffleFieldsWithIntervals(0)
         .then(() => {
             this.isGameBegan = true;
-            this.removeDisablingLayer();
+            this.disablingLayer.removeDisablingLayer();
         });
         this.renderThemeButtons();
         this.renderBoard();
@@ -67,7 +69,7 @@ class GameRenderer extends GameData{
         if(this.isGameBegan)
             this.boardHTML.textContent = ""
         else
-            this.boardHTML.innerHTML = this.createDisablingLayer();
+            this.boardHTML.innerHTML = this.disablingLayer.createDisablingLayer();
         this.fields.forEach(field => {
             this.convertFieldToHTMLElement(field)
         });
@@ -104,21 +106,6 @@ class GameRenderer extends GameData{
         })
 
     }
-
-    private createDisablingLayer() : string {
-        const shuffleBtn = document.querySelector(".shuffle") as HTMLButtonElement;
-        shuffleBtn.disabled = true;
-        return `<div class="disabling-layer"></div>`;
-    }
-
-    private removeDisablingLayer() : void {
-        const shuffleBtn = document.querySelector(".shuffle") as HTMLButtonElement;
-        const disablingLayer = document.querySelector(".disabling-layer");
-        
-        shuffleBtn.disabled = false;
-        disablingLayer?.remove();
-    }
-
     private renderThemeButtons() : void{
         const themeContent = document.querySelector(".themes-switcher__buttons") as HTMLElement;
 
