@@ -1,8 +1,10 @@
 import GameData from "../game/Game";
 import DisablingLayer from "./DisablingLayer";
+import {EventEmitter} from "events";
 import { buttons } from "./buttons";
 import "./board.scss"
 import "../fieldSet/field.scss"
+
 //Делегат для начала новой игры
 type newGameDelegate = () => void;
 class GameRenderer extends GameData{
@@ -11,6 +13,20 @@ class GameRenderer extends GameData{
     counterHTML = document.querySelector(".menu-content__counter") as HTMLElement;
     theme: string = "theme-white";
     disablingLayer : DisablingLayer = new DisablingLayer();
+    eventEmitter = new EventEmitter();
+
+    constructor(){
+        super();
+        this.eventEmitter.on("newGame", this.handleNewGame);
+    }
+
+    private handleNewGame = () => {
+        this.renderNewGame();
+    }
+
+    public triggerNewGame = () => {
+        this.eventEmitter.emit("newGame");
+    }
 
     private getCurrentTheme = (): string => {
         const activeThemeButton = document.querySelector(".theme-active") as HTMLElement;

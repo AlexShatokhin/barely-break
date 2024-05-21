@@ -10,5 +10,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
     set.renderNewGame();
     theme.renderThemeButton();
-    shuffleBtn?.addEventListener("click", () => set.renderNewGame())
+    shuffleBtn?.addEventListener("click", () => set.triggerNewGame())
 })
