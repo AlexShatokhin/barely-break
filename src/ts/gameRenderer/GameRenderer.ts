@@ -76,9 +76,11 @@ class GameRenderer extends GameData{
         
         this.counterHTML.textContent = this.movesCount.toString();
 
-
-
-        if(this.isGameWon() && this.isGameBegan){
+        try {
+            if(this.isGameWon() && this.isGameBegan){
+                throw new Error("Game is won");
+            }
+        } catch (error) {
             this.boardHTML.innerHTML += `
             <div class = "board__content"> 
                 <h1 class="board__title">Поздравляем!</h1>
@@ -86,8 +88,9 @@ class GameRenderer extends GameData{
             </div>
             `;
             this.boardHTML.classList.add("board__won");
-
         }
+
+
     }
 
 
